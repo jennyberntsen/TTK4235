@@ -62,7 +62,7 @@ void elevio_buttonLamp(int floor, ButtonType button, int value){
     pthread_mutex_unlock(&sockmtx);
 }
 
-/* Oppdaterer etasjeindikator */
+/* Oppdaterer etasjeindikator, brukes til etasjelys */
 void elevio_floorIndicator(int floor){
     assert(floor >= 0);
     assert(floor < N_FLOORS);

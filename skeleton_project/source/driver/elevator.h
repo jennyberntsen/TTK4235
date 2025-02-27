@@ -2,19 +2,28 @@
 
 #include "elevio.h"
 #include "con_load.h"
+#include "queue.h"
 
 typedef enum {
     START,
     MOVING,
     WAITING,
     STOP
-} elevator_states;
+} Elevator_states;
 
-typedef struct {
-    int current_floor;
-    int next_floor;
-    int queue[N_FLOORS][N_BUTTONS];
-    elevator_states state;
-    MotorDirection direction;
-} elevator;
+
+//extern int floor;
+
+extern int lastFloor;
+
+//Creating an instance of the Elevator_states enum
+extern Elevator_states s;
+
+
+void start();
+
+void stop();
+
+void lastFloorFunc();
+
 
