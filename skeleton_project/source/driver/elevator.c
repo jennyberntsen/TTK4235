@@ -9,7 +9,8 @@
 #include "elevator.h"
 #include "elevio.h"
 
-Elevator_states s;
+
+Elevator_states s = START;
 int lastFloor;
 
 void start(){
@@ -33,31 +34,69 @@ void stop(){
         deleteQueue();
         elevio_stopLamp(1);
         while(elevio_stopButton() == 1){
-            elevio_doorOpenLamp(1);
-            doorOpen();
-            //Hvordan implementere at heisen skal ignorere alle forsøk på bestillinger mens stoppknappen er trykket inn?
+            elevio_d
+            void oorOpenLamp(1);
+            elevio_motorDirection(DIRN_STOP);
+            deleteQueue();
         }
         elevio_stopLamp(0);
         elevio_doorOpenLamp(1);
         doorOpen();
 
-    }else if(elevio_stopButton() == 1){
+    }else if(elevio_stopButton()){
         elevio_motorDirection(DIRN_STOP);
         deleteQueue();
         elevio_stopLamp(1);
+        
         while(elevio_stopButton() == 1){
-            
-            
+            elevio_motorDirection(DIRN_STOP);
+            deleteQueue();
+        }
+        elevio_stopLamp(0);
+        if(checkIfButtonPressed()){
+            addToQueue(newOrder);
+
+        } else{
+            elevio_motorDirection(DIRN_STOP);
         }
     }
-
-   
 }
 
 void lastFloorFunc(){
-    lastFloor = elevio_floorSensor();
-    if(lastFloor != -1){
-        s = WAITING;
+    if(elevio_floorSensor() != -1){
+        lastFloor = elevio_floorSensor();
     }
 }
 
+
+int checkIfButtonPressed(){
+    for(int f = 0; f < N_FLOORS; f++){
+        for(int b = 0; b < N_BUTTONS; b++){
+            if(elevio_callButton(f, b) == 1){
+                newOrder.floor = f;
+                newOrder.button = b;
+                return 1;
+            }
+        }   
+    }
+    return 0;   
+}
+
+void elevator(){
+    for(int f = 0; f < N_FLOORS; f++){
+        for(int b = 0; b < N_BUTTONS; b++){
+
+            if(q.queue[f][b] == 1){ //Checks if there is a placed order
+                int initFloor = lastFloor;
+                while(f != lastFloor){
+                    if(checkIfButtonPressed() == 1){
+                        addToQueue(newOrder);
+                    }
+                    lastFloorFunc();
+
+                }
+            } 
+
+        }
+    }
+}

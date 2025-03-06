@@ -3,7 +3,7 @@
 #include "elevator.h"
 #include "elevio.h"
 #include "con_load.h"
-#include "lights.h"
+
 
 //Queue system that will be used to store orders
 typedef struct {
@@ -13,7 +13,7 @@ typedef struct {
 typedef struct {
     int floor;
     ButtonType button;
-}NewOrder;
+} NewOrder;
 
 //Creating an instance of the Queue struct
 extern Queue q;
@@ -21,13 +21,22 @@ extern Queue q;
 //Creating an instance of the NewOrder struct
 extern NewOrder newOrder;
 
-Elevator_states s;
 
 void addToQueue(NewOrder o);
 
 void removeOrder();
 
 void deleteQueue();
+
+void orderExecute();
+
+
+//LIGHTS
+void lights_on(NewOrder o);
+
+void lights_off(int floor, ButtonType button);
+
+void floorLight();
 
 
 

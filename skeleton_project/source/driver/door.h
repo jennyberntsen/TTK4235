@@ -4,6 +4,7 @@
 #include "queue.h"
 #include "elevio.h"
 
+
 void doorOpen();
-void doorClose();
+
 void obstruction();

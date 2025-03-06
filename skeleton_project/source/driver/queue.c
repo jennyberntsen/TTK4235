@@ -17,6 +17,8 @@ Queue q = {
     }
 };
 
+NewOrder newOrder;
+
 void addToQueue(NewOrder o){
     lights_on(o);
     q.queue[o.floor][o.button] = 1;
@@ -40,5 +42,29 @@ void deleteQueue(){
             q.queue[f][b] = 0;
             lights_off(f, b);
         }
+    }
+}
+
+void orderExecute(){
+    removeOrder();
+    doorOpen();
+}
+
+//LIGHTS
+
+void lights_on(NewOrder o){
+    int floor = o.floor;
+    ButtonType button = o.button;
+    elevio_buttonLamp(floor, button, 1);
+}
+
+void lights_off(int floor, ButtonType button){
+    elevio_buttonLamp(floor, button, 0);
+}
+
+void floorLight(){
+    int floor = elevio_floorSensor();
+    if(floor >=0 && floor < N_FLOORS){
+        elevio_floorIndicator(floor);
     }
 }

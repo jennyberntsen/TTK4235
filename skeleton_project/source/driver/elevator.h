@@ -1,15 +1,17 @@
 #pragma once
 
-#include "elevio.h"
-#include "con_load.h"
-#include "queue.h"
-
 typedef enum {
     START,
     MOVING,
     WAITING,
     STOP
 } Elevator_states;
+
+#include "elevio.h"
+#include "con_load.h"
+#include "queue.h"
+#include "door.h"
+
 
 
 //extern int floor;
@@ -26,4 +28,8 @@ void stop();
 
 void lastFloorFunc();
 
+//Checks if a button is pressed
+int checkIfButtonPressed();
+
+void elevator();
 
