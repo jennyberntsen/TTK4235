@@ -34,8 +34,7 @@ void stop(){
         deleteQueue();
         elevio_stopLamp(1);
         while(elevio_stopButton() == 1){
-            elevio_d
-            void oorOpenLamp(1);
+            elevio_doorOpenLamp(1);
             elevio_motorDirection(DIRN_STOP);
             deleteQueue();
         }
@@ -93,10 +92,31 @@ void elevator(){
                         addToQueue(newOrder);
                     }
                     lastFloorFunc();
+                    stop();
+                    floorLight();
 
+                    if(f < lastFloor){ //Checking if there is a placed order on the way down
+                        elevio_motorDirection(DIRN_DOWN);
+
+                        for(int i = initFloor - 1; i > f; i--){
+                            if((q.queue[i][1] == 1 || q.queue[i][2] == 1) && lastFloor == i){
+                                orderExecute();
+                            }
+                        }
+                    }
+                    else if(f > lastFloor){ //Checking if there is a placed order on the way up
+                        elevio_motorDirection(DIRN_UP);
+
+                        for(int i = initFloor + 1; i < f; i++){
+                            if((q.queue[i][0] == 1 || q.queue[i][2] == 1) && lastFloor == i){
+                                orderExecute();
+                            }
+                        }
+                    }
                 }
+                orderExecute();
+                break;      
             } 
-
         }
     }
 }

@@ -27,9 +27,8 @@ void doorOpen(){
         }  
         nanosleep(&(struct timespec){0, 20 * 1000 * 1000}, NULL);
     }
+    elevio_doorOpenLamp(0);
 }
-
-
 
 void obstruction(){
     while(elevio_obstruction()){
