@@ -10,9 +10,11 @@
 #include "elevio.h"
 
 
-Elevator_states s = START;
+Elevator_states s = START; //Initializing the elevator state
 int lastFloor;
 
+//Initializing the elevator to start at a legal floor. 
+//Setting the lamps to zero
 void start(){
     elevio_stopLamp(0);
     elevio_doorOpenLamp(0);
@@ -25,11 +27,13 @@ void start(){
         elevio_motorDirection(DIRN_DOWN);
     }
     elevio_motorDirection(DIRN_STOP);
-
 }
 
+
+//Stop-function 
+//If the stop button is pressed, the elevator must stop immediately
 void stop(){
-    if(elevio_stopButton() == 1 && elevio_floorSensor() != -1){
+    if(elevio_stopButton() == 1 && elevio_floorSensor() != -1){ //Stop butten is pressed while at a floor
         elevio_motorDirection(DIRN_STOP);
         deleteQueue();
         elevio_stopLamp(1);
@@ -42,7 +46,7 @@ void stop(){
         elevio_doorOpenLamp(1);
         doorOpen();
 
-    }else if(elevio_stopButton()){
+    }else if(elevio_stopButton()){ //Stop button is pressed and inbetween floors
         elevio_motorDirection(DIRN_STOP);
         deleteQueue();
         elevio_stopLamp(1);
@@ -61,6 +65,7 @@ void stop(){
     }
 }
 
+//Updates the lastFloor variable to the most reasent visited floor
 void lastFloorFunc(){
     if(elevio_floorSensor() != -1){
         lastFloor = elevio_floorSensor();
@@ -68,6 +73,8 @@ void lastFloorFunc(){
 }
 
 
+//Checks if a button is pressed.
+//If so, this is a new order.
 int checkIfButtonPressed(){
     for(int f = 0; f < N_FLOORS; f++){
         for(int b = 0; b < N_BUTTONS; b++){
@@ -80,6 +87,7 @@ int checkIfButtonPressed(){
     }
     return 0;   
 }
+
 
 void elevator(){
     for(int f = 0; f < N_FLOORS; f++){

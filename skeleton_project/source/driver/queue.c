@@ -8,6 +8,7 @@
 
 #include "queue.h"
 
+//Creating an instance of Queue
 Queue q = {
     .queue = {
         {0, 0, 0},
@@ -19,11 +20,13 @@ Queue q = {
 
 NewOrder newOrder;
 
+//Adds new order to the queue
 void addToQueue(NewOrder o){
     lights_on(o);
     q.queue[o.floor][o.button] = 1;
 }
 
+//Removes order from the queue
 void removeOrder(){
     lastFloorFunc();
     for(int f = 0; f < N_FLOORS; f++){
@@ -36,6 +39,7 @@ void removeOrder(){
     }
 }
 
+//The deletes the entire queue
 void deleteQueue(){
     for(int f = 0; f < N_FLOORS; f++){
         for(int b = 0; b < N_BUTTONS; b++){
@@ -61,6 +65,7 @@ void lights_on(NewOrder o){
 void lights_off(int floor, ButtonType button){
     elevio_buttonLamp(floor, button, 0);
 }
+
 
 void floorLight(){
     int floor = elevio_floorSensor();

@@ -8,11 +8,12 @@
 
 #include "door.h"
 
+//Function to open door
 void doorOpen(){
     elevio_motorDirection(DIRN_STOP);
     elevio_doorOpenLamp(1);
-    for(int i = 0; i < 150; i++){
-        if(elevio_stopButton()){
+    for(int i = 0; i < 150; i++){ // Loop for door to stay open for 3 seconds
+        if(elevio_stopButton()){  
             stop();
         }
         if(elevio_obstruction()){
@@ -30,6 +31,8 @@ void doorOpen(){
     elevio_doorOpenLamp(0);
 }
 
+//If obstruction, there is still poosible to place a new order
+// and the stop-button can still be pressed
 void obstruction(){
     while(elevio_obstruction()){
         if(checkIfButtonPressed() == 1){
