@@ -22,7 +22,7 @@ NewOrder newOrder;
 
 //Adds new order to the queue
 void addToQueue(NewOrder o){
-    lights_on(o);
+    lightsOn(o);
     q.queue[o.floor][o.button] = 1;
 }
 
@@ -33,7 +33,7 @@ void removeOrder(){
         if (f == lastFloor){
             for(int b = 0; b < N_BUTTONS; b++){
                 q.queue[f][b] = 0;
-                lights_off(f, b);
+                lightsOff(f, b);
             }
         }
     }
@@ -44,7 +44,7 @@ void deleteQueue(){
     for(int f = 0; f < N_FLOORS; f++){
         for(int b = 0; b < N_BUTTONS; b++){
             q.queue[f][b] = 0;
-            lights_off(f, b);
+            lightsOff(f, b);
         }
     }
 }
@@ -56,13 +56,13 @@ void orderExecute(){
 
 //LIGHTS
 
-void lights_on(NewOrder o){
+void lightsOn(NewOrder o){
     int floor = o.floor;
     ButtonType button = o.button;
     elevio_buttonLamp(floor, button, 1);
 }
 
-void lights_off(int floor, ButtonType button){
+void lightsOff(int floor, ButtonType button){
     elevio_buttonLamp(floor, button, 0);
 }
 

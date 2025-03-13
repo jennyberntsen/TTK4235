@@ -32,9 +32,9 @@ void orderExecute();
 
 
 //LIGHTS
-void lights_on(NewOrder o);
+void lightsOn(NewOrder o);
 
-void lights_off(int floor, ButtonType button);
+void lightsOff(int floor, ButtonType button);
 
 void floorLight();
 
